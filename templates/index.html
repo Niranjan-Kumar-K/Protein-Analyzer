@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProteoStream-Ultra: Multiverse Edition</title>
+    
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='logo.svg') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="loading-overlay" class="loader-hidden">
+        <div class="loader-wrapper">
+            <div class="folding-protein">
+                <div class="domain peptide-1"></div>
+                <div class="domain peptide-2"></div>
+                <div class="domain peptide-3"></div>
+                <div class="domain peptide-4"></div>
+            </div>
+            <p class="loader-text">Computing structural thermodynamics and molecular vectors...</p>
+        </div>
+    </div>
+
+    <button id="theme-cycle-btn" aria-label="Cycle Interface Palette" title="Cycle Theme Design">
+        <span class="core-dot"></span>
+    </button>
+
+    <header class="main-header">
+        <div class="header-container">
+            <div class="logo-area">
+                <svg class="site-logo" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.5 10.5C4.5 5.25329 8.75329 1 14 1C17.5 1 20 3.5 20 6.5C20 9.5 16.5 11 13.5 12.5C10.5 14 7 15.5 7 18.5C7 21.5 9.5 23 13 23C18.2467 23 22.5 18.7467 22.5 13.5" stroke="url(#logo-grad)" stroke-width="2.5" stroke-linecap="round"/>
+                    <defs>
+                        <linearGradient id="logo-grad" x1="4.5" y1="1" x2="22.5" y2="23" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="var(--accent-primary)" />
+                            <stop offset="100%" stop-color="var(--accent-secondary)" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="logo-text">ProteoStream-Ultra</span>
+            </div>
+            <p class="tagline">Automated thermodynamic profiles and high-resolution Akta Pure column mapping.</p>
+        </div>
+    </header>
+
+    <main class="container page-workspace">
+        <section class="glass-card input-card">
+            <div class="card-header-center">
+                <h2>Enter the Sequence</h2>
+            </div>
+            <form id="analytics-form" method="POST">
+                <textarea 
+                    name="protein_sequence" 
+                    placeholder="Paste single-letter amino acid characters here (FASTA strings or raw sequences)..." 
+                    required>{{ protein_input }}</textarea>
+                
+                <div class="form-actions-center">
+                    <button type="submit" class="btn-interactive">
+                        <span>Analyze Sequence</span>
+                    </button>
+                    <button type="button" id="clear-sequence-btn" class="btn-secondary">
+                        Clear Sequence
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        {% if results and results.error %}
+        <div class="error-banner">⚠️ {{ results.error }}</div>
+        {% endif %}
+
+        {% if results and not results.error %}
+        <div class="dashboard-layout">
+            
+            <section class="glass-card metrics-panel">
+                <div class="card-header">
+                    <h3>Thermodynamic &amp; Structural State</h3>
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric-tile">
+                        <span class="tile-label">Molecular Envelope Mass</span>
+                        <span class="tile-value">{{ results.mw }}</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="tile-label">Isoelectric Vector (pI)</span>
+                        <span class="tile-value">{{ results.pI }}</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="tile-label">Instability Index</span>
+                        <span class="tile-value-alt">{{ results.instability }}</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="tile-label">Aliphatic Index (Thermal Parameter)</span>
+                        <span class="tile-value-alt">{{ results.aliphatic }}</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="tile-label">Molar Extinction Coeff. (ε)</span>
+                        <span class="tile-value-alt" style="font-size: 1.12rem;">{{ results.extinction }}</span>
+                    </div>
+                    <div class="metric-tile">
+                        <span class="tile-label">Absorbance (A280 for 1mg/mL)</span>
+                        <span class="tile-value-alt">{{ results.a280 }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glass-card workflow-panel">
+                <div class="workflow-header">
+                    <h3>Liquid Chromatography Strategy</h3>
+                    <span class="badge">{{ results.certainty }}</span>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h4>Phase I: Target Capture (IEX)</h4>
+                            <div class="parameter-tag">Akta Matrix: <strong>{{ results.resin }}</strong></div>
+                            <div class="parameter-tag">Mobile Phase: <code>{{ results.buffer }}</code></div>
+                            <p class="rationale-text">{{ results.rationale }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if results.intermediate_resin %}
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h4>Phase II: Intermediate Purification (HIC)</h4>
+                            <div class="parameter-tag">Akta Matrix: <strong>{{ results.intermediate_resin }}</strong></div>
+                            <div class="parameter-tag">Mobile Phase: <code>{{ results.intermediate_buffer }}</code></div>
+                            <p class="rationale-text">{{ results.intermediate_rationale }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker">{% if results.intermediate_resin %}3{% else %}2{% endif %}</div>
+                        <div class="timeline-content">
+                            <h4>Phase {% if results.intermediate_resin %}III{% else %}II{% endif %}: Fragment Polishing (SEC)</h4>
+                            <div class="parameter-tag">Akta Matrix: <strong>{{ results.polishing }}</strong></div>
+                            <div class="parameter-tag">Mobile Phase: <code>1x PBS, pH 7.4</code></div>
+                            <p class="rationale-text">Isolates intact target conformations away from transient degradation factors, sub-fragments, and aggregate multi-mers.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+        {% endif %}
+    </main>
+
+    <script>
+        // Engagement Loader Transition
+        document.getElementById('analytics-form').addEventListener('submit', function() {
+            document.getElementById('loading-overlay').className = 'loader-visible';
+        });
+
+        // Loop array containing our 4 custom design theme states
+        const themes = ['cyber', 'emerald', 'amethyst', 'frost'];
+        const cycleBtn = document.getElementById('theme-cycle-btn');
+
+        function getActiveTheme() {
+            return localStorage.getItem('proteo_theme') || 'cyber';
+        }
+
+        function applyTheme(themeName) {
+            if (themeName === 'cyber') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', themeName);
+            }
+            localStorage.setItem('proteo_theme', themeName);
+        }
+
+        // Initialize display configuration state from local storage cache
+        applyTheme(getActiveTheme());
+
+        // Event listener path to cycle themes sequentially on click
+        cycleBtn.addEventListener('click', () => {
+            const currentTheme = getActiveTheme();
+            let currentIndex = themes.indexOf(currentTheme);
+            let nextIndex = (currentIndex + 1) % themes.length;
+            const nextTheme = themes[nextIndex];
+            
+            applyTheme(nextTheme);
+        });
+
+        // Instant Workspace Clearance Engine Trigger
+        const clearBtn = document.getElementById('clear-sequence-btn');
+        const textarea = document.querySelector('textarea[name="protein_sequence"]');
+
+        clearBtn.addEventListener('click', () => {
+            textarea.value = '';
+            textarea.focus();
+        });
+    </script>
+</body>
+</html>

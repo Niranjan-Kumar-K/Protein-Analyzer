@@ -3,36 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BioStream-Ultra | Advanced Protein Analytics</title>
+    <title>Proteosome-Ultra | Advanced Protein Analytics</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Base Themes */
-        body.theme-dark {
+        /* Multi-Theme Core Configuration Profiles */
+        body.theme-neon-void {
             background: radial-gradient(circle at top right, #130b24, #07030e);
             color: #e2e8f0;
         }
-        body.theme-light {
-            background: radial-gradient(circle at top right, #f8fafc, #f1f5f9);
-            color: #0f172a;
-        }
-
-        /* Card Transitions and Borders */
-        .premium-card {
-            transition: all 0.3s ease;
-        }
-        .theme-dark .premium-card {
+        body.theme-neon-void .premium-card {
             background: rgba(23, 15, 41, 0.65);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(139, 92, 246, 0.2);
         }
-        .theme-light .premium-card {
-            background: rgba(255, 255, 255, 0.9);
+
+        body.theme-cyber-slime {
+            background: radial-gradient(circle at top right, #08120a, #020503);
+            color: #adbac7;
+        }
+        body.theme-cyber-slime .premium-card {
+            background: rgba(12, 28, 15, 0.7);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(148, 163, 184, 0.25);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.25);
         }
 
-        /* Centralized Biological DNA Loader Elements */
+        body.theme-solar-flare {
+            background: radial-gradient(circle at top right, #1c0f0a, #0c0502);
+            color: #f7e6df;
+        }
+        body.theme-solar-flare .premium-card {
+            background: rgba(36, 18, 12, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(249, 115, 22, 0.25);
+        }
+
+        body.theme-academic-light {
+            background: radial-gradient(circle at top right, #f8fafc, #e2e8f0);
+            color: #0f172a;
+        }
+        body.theme-academic-light .premium-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Goated Centralized Biological Loader Elements */
         .dna-dot {
             animation: dnaBounce 1.6s infinite ease-in-out;
         }
@@ -41,55 +57,53 @@
         .dna-dot:nth-child(4) { animation-delay: 0.6s; }
 
         @keyframes dnaBounce {
-            0%, 100% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 2px rgba(34,211,238,0.3)); }
-            50% { transform: translateY(-20px) scale(1.3); filter: drop-shadow(0 0 12px rgba(168,85,247,0.8)); }
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-22px) scale(1.35); }
         }
 
-        /* Custom Scrolling Profiles */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        .theme-dark ::-webkit-scrollbar-thumb { background: #6d28d9; border-radius: 10px; }
-        .theme-light ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        /* Premium Smooth Card Transitions */
+        .premium-card, body, button {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
     </style>
 </head>
-<body class="theme-dark min-h-screen flex flex-col items-center p-4 md:p-8 font-sans">
+<body class="theme-neon-void min-h-screen flex flex-col items-center p-4 md:p-8 font-sans">
 
-    <header class="w-full max-w-6xl flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 border-b border-violet-950/10 pb-4">
+    <header class="w-full max-w-6xl flex flex-row justify-between items-center mb-8 border-b border-violet-950/10 pb-4">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-violet-600 to-fuchsia-600 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.35)] transform hover:rotate-12 transition-transform duration-300">
-                <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4.5 16.5c-1.5-1.5-2.5-3.5-2.5-5.5 0-4.4 3.6-8 8-8s8 3.6 8 8c0 2-1 4-2.5 5.5"></path>
-                    <path d="M12 2v2"></path>
-                    <path d="M12 20v2"></path>
-                    <path d="M2 12h2"></path>
-                    <path d="M20 12h2"></path>
-                    <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-violet-600 to-fuchsia-600 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.35)]">
+                <svg class="w-6 h-6 text-white animate-spin-slow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke-dasharray="4 4"></path>
+                    <circle cx="12" cy="12" r="4" fill="currentColor"></circle>
+                    <path d="M12 6v2M12 16v2M6 12h2M16 12h2"></path>
                 </svg>
             </div>
             <div class="text-left">
                 <h1 class="text-2xl md:text-3xl font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-violet-400 to-fuchsia-400">
-                    BioStream-Ultra
+                    Proteosome-Ultra
                 </h1>
-                <p class="text-[10px] uppercase font-bold tracking-widest text-slate-400 dark:text-gray-400">Bioinformatics Analytics Console</p>
+                <p class="text-[10px] uppercase font-bold tracking-widest text-gray-500 opacity-80">Automated Thermodynamic Profiles & Structural Mapping</p>
             </div>
         </div>
         
-        <button id="themeToggleBtn" class="flex items-center gap-2 px-4 py-2 rounded-full border border-violet-500/30 bg-violet-950/10 hover:bg-violet-900/20 transition-all duration-300 text-xs font-bold uppercase tracking-wider text-violet-400">
-            <span id="themeIcon">🌙</span> <span id="themeText">Neon Dark Mode</span>
-        </button>
+        <button 
+            id="themeToggleBtn" 
+            title="Toggle Dashboard Theme Vector Matrix"
+            class="w-8 h-8 rounded-full border-2 border-violet-500/40 bg-gradient-to-tr from-cyan-400 to-fuchsia-500 shadow-[0_0_15px_rgba(168,85,247,0.5)] transform hover:scale-110 active:scale-90 transition-all duration-200"
+        ></button>
     </header>
 
     <main class="w-full max-w-6xl space-y-6">
         
         <section class="premium-card p-6 md:p-8 rounded-2xl relative overflow-hidden">
-            <h2 class="text-sm font-bold tracking-wider text-center mb-4 uppercase text-gray-400">Enter Primary Peptide Sequence</h2>
+            <h2 class="text-xs font-bold tracking-widest text-center mb-4 uppercase opacity-70">Enter Target Primary Peptide Sequence</h2>
             <form id="analyzerForm" action="/" method="POST" class="space-y-4">
                 <textarea 
                     name="protein_sequence" 
                     id="protein_sequence"
                     rows="4" 
                     placeholder="PASTE AMINO ACID RESIDUES OR RAW FASTA DATA STRINGS (E.G., MGMGMG...)"
-                    class="w-full p-4 rounded-xl bg-black/40 border border-violet-900/30 text-cyan-400 font-mono tracking-widest text-sm focus:outline-none focus:border-cyan-500 transition-colors duration-300 resize-none uppercase shadow-inner"
+                    class="w-full p-4 rounded-xl bg-black/30 border border-violet-900/20 text-cyan-400 font-mono tracking-widest text-xs focus:outline-none focus:border-cyan-500 transition-colors duration-300 resize-none uppercase shadow-inner"
                     required
                 >{{ protein_input }}</textarea>
                 
@@ -98,7 +112,7 @@
                         type="submit" 
                         class="px-8 py-3 rounded-full font-bold bg-gradient-to-r from-cyan-500 via-violet-600 to-fuchsia-600 text-white hover:opacity-95 active:scale-95 transition-all shadow-[0_0_25px_rgba(139,92,246,0.25)] duration-200 uppercase tracking-wider text-xs"
                     >
-                        Analyze Residues
+                        Analyze Sequence
                     </button>
                     <button 
                         type="button" 
@@ -112,11 +126,11 @@
         </section>
 
         <div id="loadingScreen" class="hidden fixed inset-0 z-50 bg-black/85 flex flex-col items-center justify-center space-y-6 backdrop-blur-md">
-            <div class="flex items-center justify-center gap-4 h-12">
-                <div class="dna-dot w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.8)]"></div>
-                <div class="dna-dot w-4 h-4 rounded-full bg-violet-400 shadow-[0_0_12px_rgba(139,92,246,0.8)]"></div>
-                <div class="dna-dot w-4 h-4 rounded-full bg-fuchsia-400 shadow-[0_0_12px_rgba(217,70,239,0.8)]"></div>
-                <div class="dna-dot w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]"></div>
+            <div class="flex items-center justify-center gap-5 h-12">
+                <div class="dna-dot w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_14px_rgba(34,211,238,0.9)]"></div>
+                <div class="dna-dot w-4 h-4 rounded-full bg-violet-400 shadow-[0_0_14px_rgba(139,92,246,0.9)]"></div>
+                <div class="dna-dot w-4 h-4 rounded-full bg-fuchsia-400 shadow-[0_0_14px_rgba(217,70,239,0.9)]"></div>
+                <div class="dna-dot w-4 h-4 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.9)]"></div>
             </div>
             <p class="text-xs font-bold tracking-widest text-cyan-400 text-center uppercase max-w-sm px-4 leading-relaxed animate-pulse">
                 Parsing primary sequences & simulating dynamic chromatography separation matrices...
@@ -133,38 +147,38 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <section class="lg:col-span-5 space-y-4">
-                <div class="premium-card p-6 rounded-2xl space-y-6">
+                <div class="premium-card p-6 rounded-2xl space-y-5">
                     <h3 class="text-xs font-bold tracking-widest text-gray-400 uppercase border-b border-violet-950/20 pb-2">
                         Thermodynamic Parameters
                     </h3>
                     
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">Molecular Weight</span>
-                            <span class="text-base font-black text-fuchsia-400 tracking-wide">{{ results.mw }}</span>
+                        <div class="bg-black/10 p-4 rounded-xl border border-violet-950/10 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">Molecular Weight</span>
+                            <span class="text-sm font-medium text-fuchsia-400 tracking-wide">{{ results.mw }}</span>
                         </div>
-                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">Isoelectric Vector</span>
-                            <span class="text-base font-black text-violet-400 tracking-wide">pH {{ results.pI }}</span>
+                        <div class="bg-black/10 p-4 rounded-xl border border-violet-950/10 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">Isoelectric Vector</span>
+                            <span class="text-sm font-medium text-violet-400 tracking-wide">pH {{ results.pI }}</span>
                         </div>
-                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">Stability Index</span>
-                            <span class="text-base font-black text-cyan-400 tracking-wide">{{ results.instability }}</span>
+                        <div class="bg-black/10 p-4 rounded-xl border border-violet-950/10 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">Stability Index</span>
+                            <span class="text-sm font-medium text-cyan-400 tracking-wide">{{ results.instability }}</span>
                         </div>
-                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">Aliphatic Volume</span>
-                            <span class="text-base font-black text-sky-400 tracking-wide">{{ results.aliphatic }}</span>
+                        <div class="bg-black/10 p-4 rounded-xl border border-violet-950/10 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">Aliphatic Volume</span>
+                            <span class="text-sm font-medium text-sky-400 tracking-wide">{{ results.aliphatic }}</span>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-4 pt-2">
-                        <div class="bg-black/30 p-4 rounded-xl border border-violet-950/30 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">Molar Epsilon (ε)</span>
-                            <span class="text-base font-black text-teal-400 tracking-wide truncate">{{ results.extinction }}</span>
+                    <div class="grid grid-cols-2 gap-4 pt-1">
+                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">Molar Epsilon (ε)</span>
+                            <span class="text-sm font-medium text-teal-400 tracking-wide truncate">{{ results.extinction }}</span>
                         </div>
-                        <div class="bg-black/30 p-4 rounded-xl border border-violet-950/30 flex flex-col justify-between">
-                            <span class="text-[9px] uppercase font-bold tracking-wider text-gray-400 mb-2 block">UV Absorbance (A280)</span>
-                            <span class="text-base font-black text-emerald-400 tracking-wide">{{ results.a280 }}</span>
+                        <div class="bg-black/20 p-4 rounded-xl border border-violet-950/20 flex flex-col justify-between">
+                            <span class="text-xs font-black uppercase tracking-wider text-gray-400 mb-2 block">UV Absorbance (A280)</span>
+                            <span class="text-sm font-medium text-emerald-400 tracking-wide">{{ results.a280 }}</span>
                         </div>
                     </div>
                 </div>
@@ -187,30 +201,30 @@
                             <div class="relative pl-8">
                                 <div class="absolute left-1 top-1 w-4 h-4 rounded-full bg-black border-2 border-cyan-400 flex items-center justify-center text-[9px] font-bold text-cyan-400">1</div>
                                 <h4 class="text-xs font-black tracking-widest text-cyan-400 uppercase mb-2">Phase I: Target Capture (IEX)</h4>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Matrix Medium:</span>
-                                    <span class="font-bold">{{ results.resin }}</span>
+                                    <span class="font-medium opacity-90">{{ results.resin }}</span>
                                 </div>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Running Buffer Parameters:</span>
                                     <span class="font-bold text-cyan-400 font-mono">{{ results.buffer }}</span>
                                 </div>
-                                <p class="text-xs text-gray-400 leading-relaxed">{{ results.rationale }}</p>
+                                <p class="text-xs text-gray-400 leading-relaxed opacity-80">{{ results.rationale }}</p>
                             </div>
 
                             {% if results.intermediate_resin %}
                             <div class="relative pl-8">
                                 <div class="absolute left-1 top-1 w-4 h-4 rounded-full bg-black border-2 border-violet-500 flex items-center justify-center text-[9px] font-bold text-violet-400">2</div>
                                 <h4 class="text-xs font-black tracking-widest text-violet-400 uppercase mb-2">Phase II: Intermediate Purification (HIC)</h4>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Matrix Medium:</span>
-                                    <span class="font-bold">{{ results.intermediate_resin }}</span>
+                                    <span class="font-medium opacity-90">{{ results.intermediate_resin }}</span>
                                 </div>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Running Buffer Parameters:</span>
                                     <span class="font-bold text-violet-400 font-mono">{{ results.intermediate_buffer }}</span>
                                 </div>
-                                <p class="text-xs text-gray-400 leading-relaxed">{{ results.intermediate_rationale }}</p>
+                                <p class="text-xs text-gray-400 leading-relaxed opacity-80">{{ results.intermediate_rationale }}</p>
                             </div>
                             {% endif %}
 
@@ -219,15 +233,15 @@
                                     {% if results.intermediate_resin %}3{% else %}2{% endif %}
                                 </div>
                                 <h4 class="text-xs font-black tracking-widest text-fuchsia-400 uppercase mb-2">Phase III: Fragment Polishing (SEC)</h4>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Matrix Medium:</span>
-                                    <span class="font-bold">{{ results.polishing }}</span>
+                                    <span class="font-medium opacity-90">{{ results.polishing }}</span>
                                 </div>
-                                <div class="bg-black/20 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
+                                <div class="bg-black/10 p-3 rounded-xl border border-violet-950/10 mb-2 text-xs">
                                     <span class="text-[9px] uppercase font-bold text-gray-400 block mb-1">Running Buffer Parameters:</span>
-                                    <span class="font-bold text-fuchsia-400 font-mono">1x PBS, pH 7.4</span>
+                                    <span class="font-mono text-fuchsia-400 font-bold">1x PBS, pH 7.4</span>
                                 </div>
-                                <p class="text-xs text-gray-400 leading-relaxed">Sifts native molecular assemblies away from aggregated fragments, preserving sample formulation homogeny.</p>
+                                <p class="text-xs text-gray-400 leading-relaxed opacity-80">Sifts native molecular assemblies away from aggregated fragments, preserving sample formulation homogeny.</p>
                             </div>
 
                         </div>
@@ -241,21 +255,16 @@
     </main>
 
     <script>
-        // Form Interceptor & Centralized Loader Execution
+        // Goated Centered Page Transition Loader Interception
         document.getElementById('analyzerForm').addEventListener('submit', function(e) {
             e.preventDefault(); 
-            
-            // Flex the centered animation layout precisely across the viewport center
             const screen = document.getElementById('loadingScreen');
             screen.classList.remove('hidden');
             screen.classList.add('flex');
-            
-            setTimeout(() => {
-                this.submit(); 
-            }, 2500);
+            setTimeout(() => { this.submit(); }, 2500);
         });
 
-        // Clear Trigger Matrix
+        // Clear Trigger Matrix Configuration
         document.getElementById('clearBtn').addEventListener('click', function() {
             document.getElementById('protein_sequence').value = '';
             if (window.location.pathname !== '/' || window.location.search) {
@@ -263,40 +272,24 @@
             }
         });
 
-        // Premium Theme Switcher Operations
+        // 4-Theme Custom Cyclical State Toggle Logic Engine
+        const themes = ['theme-neon-void', 'theme-cyber-slime', 'theme-solar-flare', 'theme-academic-light'];
         const themeBtn = document.getElementById('themeToggleBtn');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
         const body = document.body;
 
-        // Initialize state configuration from local safety cache storage
-        const activeTheme = localStorage.getItem('bioStream_theme') || 'theme-dark';
-        body.className = activeTheme + " min-h-screen flex flex-col items-center p-4 md:p-8 font-sans";
-        updateThemeUI(activeTheme);
+        // Pull previous configuration baseline cleanly from application caching layers
+        let currentThemeIndex = themes.indexOf(localStorage.getItem('proteosome_theme') || 'theme-neon-void');
+        if (currentThemeIndex === -1) currentThemeIndex = 0;
+        
+        // Render current operational profile
+        body.className = themes[currentThemeIndex] + " min-h-screen flex flex-col items-center p-4 md:p-8 font-sans";
 
         themeBtn.addEventListener('click', () => {
-            if (body.classList.contains('theme-dark')) {
-                body.classList.replace('theme-dark', 'theme-light');
-                localStorage.setItem('bioStream_theme', 'theme-light');
-                updateThemeUI('theme-light');
-            } else {
-                body.classList.replace('theme-light', 'theme-dark');
-                localStorage.setItem('bioStream_theme', 'theme-dark');
-                updateThemeUI('theme-dark');
-            }
+            body.classList.remove(themes[currentThemeIndex]);
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+            body.classList.add(themes[currentThemeIndex]);
+            localStorage.setItem('proteosome_theme', themes[currentThemeIndex]);
         });
-
-        function updateThemeUI(theme) {
-            if (theme === 'theme-light') {
-                themeIcon.textContent = '☀️';
-                themeText.textContent = 'Academic Light';
-                themeBtn.classList.replace('text-violet-400', 'text-slate-600');
-            } else {
-                themeIcon.textContent = '🌙';
-                themeText.textContent = 'Neon Dark';
-                themeBtn.classList.replace('text-slate-600', 'text-violet-400');
-            }
-        }
     </script>
 </body>
 </html>

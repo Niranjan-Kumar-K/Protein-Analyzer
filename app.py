@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request
+import os
+from flask import Flask, render_template, request, jsonify
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
 
 app = Flask(__name__)
+
+# Secret key configuration for session security layers
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "proteostream_ultra_secure_matrix_9982")
 
 def generate_chromatography_strategy(sequence):
     try:
@@ -43,23 +47,30 @@ def generate_chromatography_strategy(sequence):
         stability_status = "Stable" if instability < 40 else "Unstable / Highly Labile"
         instability_val = f"{instability:.2f} ({stability_status})"
         
-        # Calculate Aliphatic Index via amino acid volume fractions attribute
-        aa_perc = analysed_seq.amino_acids_percent
-        val_perc = aa_perc.get('V', 0) * 100
-        ile_perc = aa_perc.get('I', 0) * 100
-        leu_perc = aa_perc.get('L', 0) * 100
-        ala_perc = aa_perc.get('A', 0) * 100
+        # Access amino_acids_percent safely as a dictionary attribute directly
+        aa_dict = analysed_seq.amino_acids_percent
+        val_perc = aa_dict.get('V', 0) * 100
+        ile_perc = aa_dict.get('I', 0) * 100
+        leu_perc = aa_dict.get('L', 0) * 100
+        ala_perc = aa_dict.get('A', 0) * 100
         aliphatic_index = ala_perc + (2.9 * val_perc) + (3.9 * ile_perc) + (3.9 * leu_perc)
         aliphatic_val = f"{aliphatic_index:.2f}"
         
-        # Extinction Coefficient & Absorbance (A280) mapping
+        # GUARDIAN FIX: Extinction Coefficient & Absorbance (A280) safe mapping for zero-W/Y proteins
         try:
-            epsilon_reduced = analysed_seq.molar_extinction_coefficient()[0]
-            extinction_val = f"{epsilon_reduced} M⁻¹ cm⁻¹"
-            a280 = epsilon_reduced / raw_mw
-            a280_val = f"{a280:.3f}"
-        except:
-            extinction_val = "0 M⁻¹ cm⁻¹ (No W/Y residues)"
+            extinction_coefficients = analysed_seq.molar_extinction_coefficient()
+            
+            # Check if we got a valid tuple/list and the first element is not None
+            if extinction_coefficients and extinction_coefficients[0] is not None:
+                epsilon_reduced = extinction_coefficients[0]
+                extinction_val = f"{epsilon_reduced} M⁻¹ cm⁻¹"
+                a280 = epsilon_reduced / raw_mw
+                a280_val = f"{a280:.3f}"
+            else:
+                extinction_val = "0 M⁻¹ cm⁻¹ (No W/Y residues present)"
+                a280_val = "0.000"
+        except Exception:
+            extinction_val = "0 M⁻¹ cm⁻¹ (Calculation unavailable)"
             a280_val = "0.000"
 
         # 5. Phase I: Capture Chromatography Decision Paths Matrix
@@ -83,7 +94,6 @@ def generate_chromatography_strategy(sequence):
             rationale = f"The sequence possesses a near-neutral vector (pI {pi_val}). A multimodal matrix is selected to exploit subtle electrostatic pocket variations."
             
         # 6. Dynamic Phase II: Intermediate Purification (C-I-P Implementation)
-        # Trigger condition: Heavy molecular scale (>45 kDa) OR structurally unstable sequence (>40)
         intermediate_resin = None
         intermediate_buffer = None
         intermediate_rationale = None
@@ -127,10 +137,15 @@ def generate_chromatography_strategy(sequence):
 def index():
     results = None
     protein_input = ""
+    
     if request.method == "POST":
         protein_input = request.form.get("protein_sequence", "")
-        results = generate_chromatography_strategy(protein_input)
+        if protein_input:
+            results = generate_chromatography_strategy(protein_input)
+            
     return render_template("index.html", results=results, protein_input=protein_input)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Bind to PORT environment variable assigned dynamically by Render
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)

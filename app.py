@@ -9,6 +9,10 @@ app.secret_key = os.environ.get("FLASK_SECRET_KEY", "proteostream_ultra_secure_m
 
 def generate_chromatography_strategy(sequence):
     try:
+        # Prevent crashing if a blank or None value somehow bypasses the route check
+        if not sequence:
+            return {"error": "No sequence data received by the processing engine."}
+            
         raw_input = sequence.strip()
         
         # 1. Parse lines and filter out FASTA header metadata smoothly
@@ -131,7 +135,7 @@ def generate_chromatography_strategy(sequence):
         }
 
     except Exception as e:
-        return {"error": f"Analysis failed: {str(e)}"}
+        return {"error": f"Analysis failed inside logic engine: {str(e)}"}
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -139,13 +143,29 @@ def index():
     protein_input = ""
     
     if request.method == "POST":
-        protein_input = request.form.get("protein_sequence", "")
+        # ⚠️ CRITICAL ENVIRONMENT DIAGNOSTIC BLOCK
+        # This checks if the form data keys match exactly what the frontend is sending.
+        print("--- RENDER INCOMING REQUEST DIAGNOSTIC ---")
+        print(f"All Form Keys Received: {list(request.form.keys())}")
+        
+        # We attempt to grab it via 'protein_sequence'
+        protein_input = request.form.get("protein_sequence")
+        print(f"Value read from 'protein_sequence': {repr(protein_input)}")
+        
+        # Fallback check: If it came in under a different key name like 'sequence'
+        if protein_input is None:
+            protein_input = request.form.get("sequence")
+            print(f"Fallback check 'sequence' value: {repr(protein_input)}")
+            
+        print("------------------------------------------")
+        
         if protein_input:
             results = generate_chromatography_strategy(protein_input)
+        else:
+            results = {"error": "Analysis failed: Backend received an empty or NoneType input text field."}
             
     return render_template("index.html", results=results, protein_input=protein_input)
 
 if __name__ == "__main__":
-    # Bind to PORT environment variable assigned dynamically by Render
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=False)
